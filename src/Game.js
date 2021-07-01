@@ -24,7 +24,7 @@ class Game extends React.Component {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
-    squares[i] = this.state.xIsNext ? "X" : "O";
+    squares[i] = this.state.xIsNext ? 'X' : "O"
     this.setState({
       history: history.concat([
         {
@@ -61,24 +61,33 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = "Winner: " + winner;
+      status = "And the Winner is: " + winner;
     } else {
-      status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      if(this.state.stepNumber === 9) {
+        status = "It's a Draw.";
+      } else {
+        status = "It's your turn player: " + (this.state.xIsNext ? "X" : "O");
+      }
+      
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={i => this.handleClick(i)}
-          />
+      <>
+        <div className='title'>Super React Game X/O</div>
+        <div className="game">
+          
+          <div className="game-board">
+            <Board
+              squares={current.squares}
+              onClick={i => this.handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ul>{moves}</ul>
+          </div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-        </div>
-      </div>
+      </>
     );
   }
 }
